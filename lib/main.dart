@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_desktop/models/employee/employee_manager.dart';
-import 'package:flutter_desktop/screens/hom_page.dart';
+import 'package:flutter_desktop/screens/home/hom_page.dart';
 import 'package:flutter_desktop/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 

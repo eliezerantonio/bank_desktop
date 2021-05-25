@@ -4,7 +4,7 @@ import 'package:flutter_desktop/helpers/api_response.dart';
 import 'package:flutter_desktop/helpers/consts.dart';
 import 'package:flutter_desktop/models/employee/employee.dart';
 import 'package:flutter_desktop/models/employee/employee_manager.dart';
-import 'package:flutter_desktop/screens/hom_page.dart';
+import 'package:flutter_desktop/screens/home/hom_page.dart';
 import 'package:flutter_desktop/util/nav.dart';
 import 'package:flutter_desktop/widgets/messenger.dart';
 import 'package:flutter_desktop/widgets/show_dialog.dart';
