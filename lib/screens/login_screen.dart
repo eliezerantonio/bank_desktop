@@ -1,19 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_desktop/helpers/api_response.dart';
+
 import 'package:flutter_desktop/helpers/consts.dart';
-import 'package:flutter_desktop/widgets/circular_background.dart';
+import 'package:flutter_desktop/models/employee/employee.dart';
+import 'package:flutter_desktop/models/employee/employee_manager.dart';
+import 'package:flutter_desktop/screens/home/hom_page.dart';
+import 'package:flutter_desktop/util/nav.dart';
+import 'package:flutter_desktop/widgets/messenger.dart';
+import 'package:flutter_desktop/widgets/show_dialog.dart';
 import 'package:flutter_desktop/widgets/text_form.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key key}) : super(key: key);
+
+  final employee = Employee();
+  final _formKey = GlobalKey<FormState>();
+  final _focusPassword =FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-    final _focusNode = FocusNode();
-
-    bool _showProgress = false;
-
     final size = MediaQuery.of(context).size;
+
+ 
+     _onClickLogin() async {
+      if(_formKey.currentState.validate()){
+        _formKey.currentState.save();
+
+    ApiResponse apiResponse =  await context.read<EmployeeManager>().login(employee.email, employee.password);
+        //eliezer
+      if (apiResponse.ok) {
+      Employee employee = apiResponse.result;
+      if (employee != null) {
+         push( context, HomePage(), replace: true);
+
+        return;
+      }
+    } else {
+      alertDialog(context, apiResponse.msg);
+    }
+ 
+      }
+   }
+
     return Scaffold(
       body: Row(
         children: [
@@ -40,7 +68,7 @@ class LoginScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Bem vindo ao Bai',
+                              'Bem vindo',
                               style: TextStyle(
                                   fontSize: 16, color: Colors.black45),
                             ),
@@ -67,8 +95,10 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                   CustomTextField(
                                     validator: _validatorEmail,
+                                    nextFocus: _focusPassword,
                                     keyboardType: TextInputType.emailAddress,
                                     textInputAction: TextInputAction.next,
+                                    onSaved: (email) => employee.email = email,
                                   ),
                                   SizedBox(
                                     height: 22,
@@ -79,6 +109,9 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                   CustomTextField(
                                     validator: _validatorPassword,
+                                    focusNode: _focusPassword, 
+                                    password: true,
+                                    onSaved: (password) => employee.password = password,
                                   ),
                                   SizedBox(
                                     height: 25,
@@ -95,9 +128,7 @@ class LoginScreen extends StatelessWidget {
                                         'Login',
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      onPressed: () {
-                                        _formKey.currentState.validate();
-                                      },
+                                      onPressed: _onClickLogin
                                     ),
                                   )
                                 ],
@@ -117,13 +148,24 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
+ 
   String _validatorEmail(String value) {
-    if (value.isEmpty) return 'Digite seu email';
+    if (value.isEmpty){
+       return 'Digite seu email';
+    } else if (!value.contains("@")) {
+      return "Preencha email valido";
+    }
     return null;
   }
 
   String _validatorPassword(String value) {
-    if (value.isEmpty) return 'Digitea senha';
-    return null;
+    if (value.isEmpty){
+      return 'Digitea senha';
+    }
+    if(value.length < 3){
+      return 'A senha precisa ter pelo menus 3 números';
+    }
+      return null; 
+  
   }
 }
