@@ -12,7 +12,7 @@ void main() => runApp(
       ChangeNotifierProvider(
         create: (_) => EmployeeManager(),
         lazy: false,
-      )
+      ),
     ],
 
     child: MaterialApp(
