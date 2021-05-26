@@ -48,7 +48,7 @@ class AccountScreen extends StatelessWidget {
                     width: 300,
                     height: 400,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                          Text('Criar conta', 
                          style: TextStyle(
@@ -94,7 +94,7 @@ class AccountScreen extends StatelessWidget {
                                             BorderRadius.circular(10)),
                                     color: Color(PRIMARY_COLOR),
                                     child: Text(
-                                      'Criar conta',
+                                      'Criar',
                                       style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: _onCriarConta

@@ -45,9 +45,11 @@ class DepositScreen extends StatelessWidget {
                 width: 300,
                 height: 500,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('Deposito'),
+                  Text('Deposito', 
+                         style: TextStyle(
+                            color: Color(PRIMARY_COLOR), fontSize: 30, fontWeight: FontWeight.bold)),
                     SizedBox(
                       height: 20,
                     ),
@@ -94,7 +96,7 @@ class DepositScreen extends StatelessWidget {
                                         BorderRadius.circular(10)),
                                 color: Color(PRIMARY_COLOR),
                                 child: Text(
-                                  'Criar conta',
+                                  'Depositar',
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 onPressed: _onCriarConta
