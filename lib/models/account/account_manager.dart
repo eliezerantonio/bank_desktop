@@ -4,19 +4,34 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_desktop/helpers/api_response.dart';
 import 'package:flutter_desktop/helpers/consts.dart';
 import 'package:flutter_desktop/models/account/account.dart';
+import 'package:flutter_desktop/models/client/client_manager.dart';
 import 'package:flutter_desktop/models/employee/employee_manager.dart';
 import 'package:http/http.dart' as http;
 
 class AccountManager extends ChangeNotifier {
 
-  AccountManager() {}
+  AccountModel account;
+
+  AccountManager() {
+  }
+
+  bool _isLoading = false;
+  set loading(bool value){
+    _isLoading = value;
+    notifyListeners();
+  }
   
-    AccountModel account;
-    EmployeeManager employee =  EmployeeManager();
+   
+  
+
+ 
+
 
   Future<ApiResponse<AccountModel>> store(AccountModel account) async {
     try {
       var url = '$BASE_URL/account/';
+
+      EmployeeManager employee ;
      
       Map<String, String> headers = {
         "Content-type": "application/json",
@@ -27,8 +42,6 @@ class AccountManager extends ChangeNotifier {
       Map params = {
         'clientId': account.clientId,
         'balance': account.balance,
-      
-     
       };
 
       String credencials = json.encode(params);
@@ -55,14 +68,19 @@ class AccountManager extends ChangeNotifier {
   } 
   
 
-  Future<ApiResponse<AccountModel>> patch(AccountModel account) async {
-    try {
-      var url = '$BASE_URL/account/deposit/';
-     
+  Future<ApiResponse<AccountModel>> deposit ({
+
+    @required int currentAccount
+
+   }) async {
+      try {
+      
+       EmployeeManager employee ;
+         loading = true;
+      var url = '$BASE_URL/account/deposit/$currentAccount';
       Map<String, String> headers = {
         "Content-type": "application/json",
-        "x-access-token":"${employee.employee.token}"
-  
+        "x-access-token": "${employee.employee.token}"
       };
 
       Map params = {
@@ -79,10 +97,11 @@ class AccountManager extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         final account = AccountModel.fromJSON(mapRensponse);
-        notifyListeners();
+        loading = false;
         return ApiResponse.ok(account);
       }
-      notifyListeners();
+
+     loading = false;
 
       return ApiResponse.error(mapRensponse["message"]);
     } catch (e) {
