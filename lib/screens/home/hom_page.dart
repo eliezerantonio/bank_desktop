@@ -102,34 +102,8 @@ class _HomePageState extends State<HomePage> {
                         });
                       },
                     ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.arrow_upward_outlined,
-                        color: Colors.white,
-                      ),
-                      title: Text(
-                        'Deposito',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onTap: () {
-                        setState(() {});
-                        menu = "Deposito";
-                      },
-                     ), 
-                      ListTile(
-                      leading: Icon(
-                        Icons.monetization_on_sharp,
-                        color: Colors.white,
-                      ),
-                      title: Text(
-                        'Levantamento',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onTap: () {
-                        setState(() {});
-                        menu = "Levantamento";
-                      },
-                     ),
+                 
+                     
                   ],
                 ),
               ),
