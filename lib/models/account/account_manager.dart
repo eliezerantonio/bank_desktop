@@ -3,17 +3,20 @@ import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_desktop/helpers/api_response.dart';
 import 'package:flutter_desktop/helpers/consts.dart';
+import 'package:flutter_desktop/models/account/account.dart';
 import 'package:flutter_desktop/models/client/client.dart';
 import 'package:flutter_desktop/models/employee/employee_manager.dart';
 import 'package:http/http.dart' as http;
 
-class ClientManager extends ChangeNotifier {
-  ClientManager() {}
-  ClientModel client;
+class AccountManager extends ChangeNotifier {
+
+  AccountManager() {}
+  
+    AccountModel account;
     EmployeeManager employee =  EmployeeManager();
-  Future<ApiResponse<ClientModel>> store(ClientModel client) async {
+  Future<ApiResponse<AccountModel>> store(AccountModel account) async {
     try {
-      var url = '$BASE_URL/client/';
+      var url = '$BASE_URL/account/';
      
       Map<String, String> headers = {
         "Content-type": "application/json",
@@ -22,13 +25,10 @@ class ClientManager extends ChangeNotifier {
       };
 
       Map params = {
-        'email': client.email,
-        'password': client.password,
-        'name': client.name,
-        'phone': client.phone,
-        'genre': client.genre,
-        'bi': client.bi,
-        'birthDate':"1997-10-26"
+        'clientId': account.clientId,
+        'balance': account.balance,
+      
+     
       };
 
       String credencials = json.encode(params);
@@ -38,9 +38,9 @@ class ClientManager extends ChangeNotifier {
       Map mapRensponse = json.decode(response.body);
 
       if (response.statusCode == 200) {
-        final client = ClientModel.fromJSON(mapRensponse);
+        final account = AccountModel.fromJSON(mapRensponse);
         notifyListeners();
-        return ApiResponse.ok(client);
+        return ApiResponse.ok(account);
       }
       notifyListeners();
 

@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_desktop/helpers/consts.dart';
 import 'package:flutter_desktop/helpers/prefs.dart';
 
-class Client extends ChangeNotifier {
+class ClientModel extends ChangeNotifier {
   int id;
   String name;
   String genre;
@@ -16,9 +16,9 @@ class Client extends ChangeNotifier {
   String pic;
   String password;
   String token;
-  Client();
+  ClientModel();
 
-  Client.fromJSON(Map<String, dynamic> fromJSON) {
+  ClientModel.fromJSON(Map<String, dynamic> fromJSON) {
     Map json = fromJSON["data"]["client"];
     this.id = json['id'];
     this.name = json["name"];

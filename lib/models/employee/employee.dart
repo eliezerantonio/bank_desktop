@@ -9,6 +9,7 @@ class Employee  extends ChangeNotifier{
   String name;
   String genre;
   String email;
+  String token;
   String password;
   int accessLevel;
   String updatedAt;
@@ -20,6 +21,7 @@ class Employee  extends ChangeNotifier{
       this.name,
       this.genre,
       this.email,
+      this.token,
       this.password,
       this.accessLevel,
       this.updatedAt,
@@ -32,6 +34,7 @@ class Employee  extends ChangeNotifier{
     name = json['name'];
     genre = json['genre'];
     email = json['email'];
+    token = fromJson["data"]['token'];
     password = json['password'];
     accessLevel = json['accessLevel'];
     updatedAt = json['updatedAt'];
@@ -44,6 +47,7 @@ class Employee  extends ChangeNotifier{
     name = json['name'];
     genre = json['genre'];
     email = json['email'];
+    token = json['token'];
     password = json['password'];
     accessLevel = json['accessLevel'];
     updatedAt = json['updatedAt'];
@@ -57,6 +61,7 @@ class Employee  extends ChangeNotifier{
     data['name'] = this.name;
     data['genre'] = this.genre;
     data['email'] = this.email;
+    data['token'] = this.token;
     data['password'] = this.password;
     data['accessLevel'] = this.accessLevel;
     data['updatedAt'] = this.updatedAt;
@@ -69,7 +74,6 @@ class Employee  extends ChangeNotifier{
     //convertendo objecto/map para String
     //
     String json = convert.json.encode(map);
-
     Prefs.setString("employee.prefs", json);
   }
 
@@ -80,7 +84,7 @@ class Employee  extends ChangeNotifier{
 
   @override
   String toString() {
-    return "EmployeeModel(id: $id, name: $name, email: $email, genre: $genre,  state: $state, password: $password)";
+    return "EmployeeModel(id: $id, name: $name, email: $email, genre: $genre, token: $token,  state: $state, password: $password)";
   }
 
 
