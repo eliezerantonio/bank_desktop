@@ -50,9 +50,11 @@ class AccountScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                    
+                         Text('Criar conta', 
+                         style: TextStyle(
+                            color: Color(PRIMARY_COLOR), fontSize: 30, fontWeight: FontWeight.bold)),
                         SizedBox(
-                          height: 20,
+                          height: 3,
                         ),
                         SizedBox(
                           height: 40,
@@ -63,6 +65,8 @@ class AccountScreen extends StatelessWidget {
                             padding: EdgeInsets.all(8.0),
                             shrinkWrap: true,
                             children: [
+                             
+                              SizedBox(height: 20,),
                               Text('ID_Client'),
                               SizedBox(height: 20,),
                               CustomTextField(
