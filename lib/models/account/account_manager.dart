@@ -55,41 +55,45 @@ class AccountManager extends ChangeNotifier {
   } 
   
 
-  Future<ApiResponse<AccountModel>> deponsit({
-    @required int currentAccount,
-    @required num balance,
-  }) async {
+  Future<ApiResponse<AccountModel>> patch(AccountModel account) async {
     try {
-    
-      var url = '$BASE_URL/account/deposit/$currentAccount';
-      Map<String, String> headers = {"Content-type": "application/json"};
+      var url = '$BASE_URL/account/deposit/';
+     
+      Map<String, String> headers = {
+        "Content-type": "application/json",
+        "x-access-token":"${employee.employee.token}"
+  
+      };
 
-      Map<String, dynamic> params = {"balance": balance};
+      Map params = {
+        'id': account.id,
+        'clientId': account.clientId,
+        'balance': account.balance,
+      };
 
-      String values = json.encode(params);
-      await Future.delayed(Duration(seconds: 2));
-      var response = await http.patch(url, body: values, headers: headers);
-
+      String credencials = json.encode(params);
+      
+      var response = await http.patch(url, body: credencials, headers: headers);
+       print(response.body);
       Map mapRensponse = json.decode(response.body);
 
-      print(response.statusCode);
       if (response.statusCode == 200) {
         final account = AccountModel.fromJSON(mapRensponse);
-      
-        //getAccount(userId: account.clientId);
+        notifyListeners();
         return ApiResponse.ok(account);
       }
-
-   
+      notifyListeners();
 
       return ApiResponse.error(mapRensponse["message"]);
-    } catch (e, exception) {
+    } catch (e) {
       print(
-        "Erro no login $e -> $exception",
+        "Erro ao Depositar $e",
       );
+      // notifyListeners();
       return ApiResponse.error("$e");
     }
-  }
+  } 
+
 
 
 
