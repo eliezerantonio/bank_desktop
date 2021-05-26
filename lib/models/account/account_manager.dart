@@ -74,9 +74,9 @@ class AccountManager extends ChangeNotifier {
 
       print(response.statusCode);
       if (response.statusCode == 200) {
-        final account = Account.fromJson(mapRensponse);
+        final account = AccountModel.fromJSON(mapRensponse);
       
-        getAccount(userId: account.clientId);
+        //getAccount(userId: account.clientId);
         return ApiResponse.ok(account);
       }
 

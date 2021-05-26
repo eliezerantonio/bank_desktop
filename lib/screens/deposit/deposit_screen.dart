@@ -25,7 +25,7 @@ class DepositScreen extends StatelessWidget {
        _onCriarConta() async {
       if(_formKey.currentState.validate()){
         _formKey.currentState.save();
-          context.read<AccountManager>().patch(account);
+         // context.read<AccountManager>().deponsit(account);
       }
    }
 
