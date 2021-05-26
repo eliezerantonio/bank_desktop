@@ -3,12 +3,11 @@ import 'package:flutter_desktop/helpers/api_response.dart';
 import 'package:flutter_desktop/helpers/consts.dart';
 import 'package:flutter_desktop/models/account/account.dart';
 import 'package:flutter_desktop/models/account/account_manager.dart';
+import 'package:flutter_desktop/widgets/messenger.dart';
 
 import 'package:flutter_desktop/widgets/text_form.dart';
 
 import 'package:provider/provider.dart';
-
-
 
 class DepositScreen extends StatelessWidget {
 
@@ -18,17 +17,25 @@ class DepositScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final size = MediaQuery.of(context).size;
 
-    
-       _onCriarConta() async {
-      if(_formKey.currentState.validate()){
+    _onCriarConta() async {
+      if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
-          context.read<AccountManager>().patch(account);
+        int currentAccount = account.id;
+        ApiResponse apiResponse = await context.read<AccountManager>().deposit(
+              currentAccount: currentAccount,
+         );
+         print('$apiResponse');
+        if (apiResponse.ok) {
+          messenger(context, "Deposito realizado com sucesso");
+        } else {
+          messenger(context, apiResponse.msg, error: true);
+        }
+      } else {
+        messenger(context, "Preencha  valor ", error: true);
       }
-   }
-
+    }
 
     return Container(
         width: size.width * 0.8,
@@ -47,9 +54,11 @@ class DepositScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                  Text('Deposito', 
-                         style: TextStyle(
-                            color: Color(PRIMARY_COLOR), fontSize: 30, fontWeight: FontWeight.bold)),
+                    Text('Deposito',
+                        style: TextStyle(
+                            color: Color(PRIMARY_COLOR),
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold)),
                     SizedBox(
                       height: 20,
                     ),
@@ -63,45 +72,52 @@ class DepositScreen extends StatelessWidget {
                         shrinkWrap: true,
                         children: [
                           Text('Numero de conta'),
-                          SizedBox(height: 20,),
-                          CustomTextField(
-                             keyboardType: TextInputType.number,
-                            onSaved: (id) => account.id = int.parse(id) ,
+                          SizedBox(
+                            height: 20,
                           ),
-                          SizedBox(height: 20,),
-                          Text('ID_Client'),
-                          SizedBox(height: 20,),
                           CustomTextField(
-                             keyboardType: TextInputType.number,
-                            onSaved: (clientId) => account.clientId = int.parse(clientId) ,
+                            keyboardType: TextInputType.number,
+                            onSaved: (id) => account.id = int.parse(id),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text('ID_Client'),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          CustomTextField(
+                            keyboardType: TextInputType.number,
+                            onSaved: (clientId) =>
+                                account.clientId = int.parse(clientId),
                           ),
                           SizedBox(
                             height: 15,
                           ),
                           Text('Balance'),
-                          SizedBox(height: 20,),
-                           CustomTextField(
-                             keyboardType: TextInputType.number,
-                            onSaved: (balance) => account.balance = double.parse(balance) ,
+                          SizedBox(
+                            height: 20,
+                          ),
+                          CustomTextField(
+                            keyboardType: TextInputType.number,
+                            onSaved: (balance) =>
+                                account.balance = double.parse(balance),
                           ),
                           SizedBox(
                             height: 15,
                           ),
                           Container(
-                            width: 100,
-                            height: 44,
-                            child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(10)),
-                                color: Color(PRIMARY_COLOR),
-                                child: Text(
-                                  'Depositar',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                onPressed: _onCriarConta
-                          )
-                          )
+                              width: 100,
+                              height: 44,
+                              child: RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  color: Color(PRIMARY_COLOR),
+                                  child: Text(
+                                    'Depositar',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  onPressed: _onCriarConta))
                         ],
                       ),
                     ),
@@ -109,7 +125,6 @@ class DepositScreen extends StatelessWidget {
                 ),
               ),
             ),
-
           ],
         ));
   }

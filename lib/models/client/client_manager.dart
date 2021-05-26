@@ -9,8 +9,11 @@ import 'package:http/http.dart' as http;
 
 class ClientManager extends ChangeNotifier {
   ClientManager() {}
+
   ClientModel client;
+
     EmployeeManager employee =  EmployeeManager();
+    
   Future<ApiResponse<ClientModel>> store(ClientModel client) async {
     try {
       var url = '$BASE_URL/client/';
