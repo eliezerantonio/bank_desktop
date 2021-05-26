@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_desktop/helpers/consts.dart';
-import 'package:flutter_desktop/models/client/client.dart';
-import 'package:flutter_desktop/models/client/client_manager.dart';
+
 import 'package:flutter_desktop/models/employee/employee.dart';
-import 'package:flutter_desktop/screens/cartoes/credit_card.dart';
 import 'package:flutter_desktop/screens/client/client_screen.dart';
 import 'package:flutter_desktop/screens/conta/account_screen.dart';
+import 'package:flutter_desktop/screens/deposit/deposit_screen.dart';
 import 'package:flutter_desktop/screens/login_screen.dart';
-import 'package:flutter_desktop/screens/raise/raiseScreen.dart';
 import 'package:flutter_desktop/util/nav.dart';
-import 'package:flutter_desktop/widgets/text_form.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -105,105 +102,34 @@ class _HomePageState extends State<HomePage> {
                         });
                       },
                     ),
-                    // ListTile(
-                    //   leading: Icon(
-                    //     Icons.credit_card,
-                    //     color: Colors.white,
-                    //   ),
-                    //   title: Text(
-                    //     'Cartões de crédito',
-                    //     style: TextStyle(color: Colors.white),
-                    //   ),
-                    //   onTap: () {
-                    //     setState(() {});
-                    //     menu = "Cartões de crédito";
-                    //   },
-                    // ),
-                    // ListTile(
-                    //   leading: Icon(
-                    //     Icons.money,
-                    //     color: Colors.white,
-                    //   ),
-                    //   title: Text(
-                    //     'Levantamentos',
-                    //     style: TextStyle(color: Colors.white),
-                    //   ),
-                    //   onTap: () {
-                    //     setState(() {});
-                    //    menu = "Levantamentos";
-                    //   },
-                    // ),
-                    // ListTile(
-                    //   leading: Icon(
-                    //     Icons.transform,
-                    //     color: Colors.white,
-                    //   ),
-                    //   title: Text(
-                    //     'Financiamento',
-                    //     style: TextStyle(color: Colors.white),
-                    //   ),
-                    //   onTap: () {
-                    //     setState(() {});
-                    //     menu = "Financiamento";
-                    //   },
-                    // ),
-                    // ListTile(
-                    //   leading: Icon(
-                    //     Icons.subdirectory_arrow_right_outlined,
-                    //     color: Colors.white,
-                    //   ),
-                    //   title: Text(
-                    //     'Deposito',
-                    //     style: TextStyle(color: Colors.white),
-                    //   ),
-                    //   onTap: () {
-                    //     setState(() {
-                    //       menu = "deposito";
-                    //     });
-                    //   },
-                    // ),
-                    // ListTile(
-                    //   leading: Icon(
-                    //     Icons.transfer_within_a_station_rounded,
-                    //     color: Colors.white,
-                    //   ),
-                    //   title: Text(
-                    //     'Transferencia',
-                    //     style: TextStyle(color: Colors.white),
-                    //   ),
-                    //   onTap: () {
-                    //     setState(() {});
-                    //     menu = "Transferencia";
-                    //   },
-                    // ),
-                    // ListTile(
-                    //   leading: Icon(
-                    //     Icons.trending_up,
-                    //     color: Colors.white,
-                    //   ),
-                    //   title: Text(
-                    //     'Empréstimos',
-                    //     style: TextStyle(color: Colors.white),
-                    //   ),
-                    //   onTap: () {
-                    //     setState(() {});
-                    //     menu = "Empréstimos";
-                    //   },
-                    // ),
-                    // ListTile(
-                    //   leading: Icon(
-                    //     Icons.cancel_schedule_send_sharp,
-                    //     color: Colors.white,
-                    //   ),
-                    //   title: Text(
-                    //     'Cancelar contas e outros',
-                    //     style: TextStyle(color: Colors.white),
-                    //   ),
-                    //   onTap: () {
-                    //     setState(() {});
-                    //     menu = "Cancelar contas e outros";
-                    //   },
-                    // ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.arrow_upward_outlined,
+                        color: Colors.white,
+                      ),
+                      title: Text(
+                        'Deposito',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onTap: () {
+                        setState(() {});
+                        menu = "Deposito";
+                      },
+                     ), 
+                      ListTile(
+                      leading: Icon(
+                        Icons.monetization_on_sharp,
+                        color: Colors.white,
+                      ),
+                      title: Text(
+                        'Levantamento',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onTap: () {
+                        setState(() {});
+                        menu = "Levantamento";
+                      },
+                     ),
                   ],
                 ),
               ),
@@ -240,50 +166,16 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       /////////////////////////////////////////////////////////
-      if (menu == "deposito")
-        Container(
-          height: 100,
-          width: 100,
-          color: Colors.red,
-        )
+      if (menu == "Deposito")
+         DepositScreen()
       else if(menu == "Conta")
           AccountScreen()
-      else if(menu == "Empréstimos")
+      else if(menu == "Levantamento")
         Container(
           height: 100,
           width: 100,
-          color: Colors.red,
+          color: Colors.green,
         )
-      else if(menu =="Cancelar contas e outros")
-        Container(
-          height: 100,
-          width: 100,
-          color: Colors.grey,
-        )
-      else if(menu == "Transferencia")
-      Container(
-          height: 100,
-          width: 100,
-          color: Colors.blue,
-        )
-      else if(menu == "Cartões de crédito")
-      Container(
-          height: 100,
-          width: 100,
-          color: Colors.purple,
-        )
-      else if( menu =="Levantamentos")
-         Container(
-          height: 100,
-          width: 100,
-          color: Colors.blue,
-        )
-        else if(menu == "Financiamento")
-        Container(
-          height: 100,
-          width: 100,
-          color: Colors.orange,
-        ) 
         else 
          ClientScreen()
     ]));
