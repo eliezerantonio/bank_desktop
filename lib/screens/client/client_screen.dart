@@ -200,7 +200,7 @@ class _ClientScreenState extends State<ClientScreen> {
                                 alignment: Alignment.center,
                                 child: !isLoading
                                     ? Text(
-                                        "Login",
+                                        "Cadastrar",
                                         style: TextStyle(color: Colors.white),
                                       )
                                     : Center(
