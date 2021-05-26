@@ -11,36 +11,50 @@ import 'package:flutter_desktop/widgets/show_dialog.dart';
 import 'package:flutter_desktop/widgets/text_form.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
 
+class _LoginScreenState extends State<LoginScreen> {
   final employee = Employee();
-  final _formKey = GlobalKey<FormState>();
-  final _focusPassword =FocusNode();
 
+  final _formKey = GlobalKey<FormState>();
+
+  final _focusPassword = FocusNode();
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
- 
-     _onClickLogin() async {
-      if(_formKey.currentState.validate()){
+    _onClickLogin() async {
+      if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
 
-    ApiResponse apiResponse =  await context.read<EmployeeManager>().login(employee.email, employee.password);
-        //eliezer
-      if (apiResponse.ok) {
-      Employee employee = apiResponse.result;
-      if (employee != null) {
-         push( context, HomePage(), replace: true);
+        setState(() {
+          isLoading = true;
+        });
 
-        return;
+        await Future.delayed(Duration(seconds: 3));
+        ApiResponse apiResponse = await context
+            .read<EmployeeManager>()
+            .login(employee.email, employee.password);
+        //eliezer
+        if (apiResponse.ok) {
+          Employee employee = apiResponse.result;
+          if (employee != null) {
+            push(context, HomePage(), replace: true);
+
+            return;
+          }
+        } else {
+          alertDialog(context, apiResponse.msg);
+        }
+        setState(() {
+          isLoading = false;
+        });
       }
-    } else {
-      alertDialog(context, apiResponse.msg);
     }
- 
-      }
-   }
 
     return Scaffold(
       body: Row(
@@ -48,8 +62,7 @@ class LoginScreen extends StatelessWidget {
           Container(
             color: Color(PRIMARY_COLOR),
             width: size.width * 0.4,
-            child: Center(child: Image.asset("assets/cards.gif")
-          ),
+            child: Center(child: Image.asset("assets/cards.gif")),
           ),
           Container(
             width: size.width * 0.6,
@@ -85,9 +98,9 @@ class LoginScreen extends StatelessWidget {
                             ),
                             Form(
                               key: _formKey,
-                              child: ListView(
-                                padding: EdgeInsets.all(8.0),
-                                shrinkWrap: true,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text("Email"),
                                   SizedBox(
@@ -109,26 +122,36 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                   CustomTextField(
                                     validator: _validatorPassword,
-                                    focusNode: _focusPassword, 
+                                    focusNode: _focusPassword,
                                     password: true,
-                                    onSaved: (password) => employee.password = password,
+                                    onSaved: (password) =>
+                                        employee.password = password,
                                   ),
                                   SizedBox(
                                     height: 25,
                                   ),
-                                  Container(
-                                    width: 100,
-                                    height: 44,
-                                    child: RaisedButton(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      color: Color(PRIMARY_COLOR),
-                                      child: Text(
-                                        'Login',
-                                        style: TextStyle(color: Colors.white),
+                                  AnimatedContainer(
+                                    duration: Duration(milliseconds: 1500),
+                                    alignment:isLoading? Alignment.center:Alignment.centerLeft,
+                                                                      child: GestureDetector(
+                                      onTap: _onClickLogin,
+                                      child: AnimatedContainer(
+                                        width: !isLoading ? 400 : 44,
+                                        height: !isLoading ? 44 : 44,
+                                        alignment: Alignment.center,
+                                        child: !isLoading
+                                            ? Text(
+                                                'Login',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )
+                                            : CircularProgressIndicator(),
+                                        decoration: BoxDecoration(
+                                            color: Color(PRIMARY_COLOR),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        duration: Duration(milliseconds: 1300),
                                       ),
-                                      onPressed: _onClickLogin
                                     ),
                                   )
                                 ],
@@ -148,10 +171,9 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
- 
   String _validatorEmail(String value) {
-    if (value.isEmpty){
-       return 'Digite seu email';
+    if (value.isEmpty) {
+      return 'Digite seu email';
     } else if (!value.contains("@")) {
       return "Preencha email valido";
     }
@@ -159,13 +181,12 @@ class LoginScreen extends StatelessWidget {
   }
 
   String _validatorPassword(String value) {
-    if (value.isEmpty){
+    if (value.isEmpty) {
       return 'Digitea senha';
     }
-    if(value.length < 3){
+    if (value.length < 3) {
       return 'A senha precisa ter pelo menus 3 números';
     }
-      return null; 
-  
+    return null;
   }
 }
