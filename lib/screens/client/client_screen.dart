@@ -2,15 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_desktop/helpers/consts.dart';
 import 'package:flutter_desktop/models/client/client.dart';
 import 'package:flutter_desktop/models/client/client_manager.dart';
+import 'package:flutter_desktop/screens/home/hom_page.dart';
+import 'package:flutter_desktop/util/nav.dart';
 import 'package:flutter_desktop/widgets/text_form.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
 import 'components/custon_button.dart';
 
-class ClientScreen extends StatelessWidget {
-  
+class ClientScreen extends StatefulWidget {
+  @override
+  _ClientScreenState createState() => _ClientScreenState();
+}
+
+class _ClientScreenState extends State<ClientScreen> {
   ClientModel client = ClientModel();
+
+  bool isLoading = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -165,20 +173,38 @@ class ClientScreen extends StatelessWidget {
                             height: 23,
                           ),
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               _formKey.currentState.save();
-                              context.read<ClientManager>().store(client);
+
+                              setState(() {
+                                isLoading = true;
+                              });
+                              await Future.delayed(Duration(seconds: 5));
+                              final api =
+                                  context.read<ClientManager>().store(client);
+                              api.then((value) {
+                                push(context, HomePage(), replace: true);
+                              });
+                              setState(() {
+                                isLoading = false;
+                              });
                             },
-                            child: Align(
-                              alignment: Alignment.centerRight,
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 1200),
+                              alignment: !isLoading
+                                  ? Alignment.centerRight
+                                  : Alignment.centerLeft,
                               child: AnimatedContainer(
-                                height: 44,
-                                width: 200,
+                                height: !isLoading ? 44 : 50,
+                                width: !isLoading ? 250 : 50,
                                 alignment: Alignment.center,
-                                child: Text(
-                                  "Login",
-                                  style: TextStyle(color: Colors.white),
-                                ),
+                                child: !isLoading
+                                    ? Text(
+                                        "Login",
+                                        style: TextStyle(color: Colors.white),
+                                      )
+                                    : Center(
+                                        child: CircularProgressIndicator()),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Color(PRIMARY_COLOR),

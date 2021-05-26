@@ -105,105 +105,105 @@ class _HomePageState extends State<HomePage> {
                         });
                       },
                     ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.credit_card,
-                        color: Colors.white,
-                      ),
-                      title: Text(
-                        'Cartões de crédito',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onTap: () {
-                        setState(() {});
-                        menu = "Cartões de crédito";
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.money,
-                        color: Colors.white,
-                      ),
-                      title: Text(
-                        'Levantamentos',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onTap: () {
-                        setState(() {});
-                       menu = "Levantamentos";
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.transform,
-                        color: Colors.white,
-                      ),
-                      title: Text(
-                        'Financiamento',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onTap: () {
-                        setState(() {});
-                        menu = "Financiamento";
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.subdirectory_arrow_right_outlined,
-                        color: Colors.white,
-                      ),
-                      title: Text(
-                        'Deposito',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onTap: () {
-                        setState(() {
-                          menu = "deposito";
-                        });
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.transfer_within_a_station_rounded,
-                        color: Colors.white,
-                      ),
-                      title: Text(
-                        'Transferencia',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onTap: () {
-                        setState(() {});
-                        menu = "Transferencia";
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.trending_up,
-                        color: Colors.white,
-                      ),
-                      title: Text(
-                        'Empréstimos',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onTap: () {
-                        setState(() {});
-                        menu = "Empréstimos";
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.cancel_schedule_send_sharp,
-                        color: Colors.white,
-                      ),
-                      title: Text(
-                        'Cancelar contas e outros',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onTap: () {
-                        setState(() {});
-                        menu = "Cancelar contas e outros";
-                      },
-                    ),
+                    // ListTile(
+                    //   leading: Icon(
+                    //     Icons.credit_card,
+                    //     color: Colors.white,
+                    //   ),
+                    //   title: Text(
+                    //     'Cartões de crédito',
+                    //     style: TextStyle(color: Colors.white),
+                    //   ),
+                    //   onTap: () {
+                    //     setState(() {});
+                    //     menu = "Cartões de crédito";
+                    //   },
+                    // ),
+                    // ListTile(
+                    //   leading: Icon(
+                    //     Icons.money,
+                    //     color: Colors.white,
+                    //   ),
+                    //   title: Text(
+                    //     'Levantamentos',
+                    //     style: TextStyle(color: Colors.white),
+                    //   ),
+                    //   onTap: () {
+                    //     setState(() {});
+                    //    menu = "Levantamentos";
+                    //   },
+                    // ),
+                    // ListTile(
+                    //   leading: Icon(
+                    //     Icons.transform,
+                    //     color: Colors.white,
+                    //   ),
+                    //   title: Text(
+                    //     'Financiamento',
+                    //     style: TextStyle(color: Colors.white),
+                    //   ),
+                    //   onTap: () {
+                    //     setState(() {});
+                    //     menu = "Financiamento";
+                    //   },
+                    // ),
+                    // ListTile(
+                    //   leading: Icon(
+                    //     Icons.subdirectory_arrow_right_outlined,
+                    //     color: Colors.white,
+                    //   ),
+                    //   title: Text(
+                    //     'Deposito',
+                    //     style: TextStyle(color: Colors.white),
+                    //   ),
+                    //   onTap: () {
+                    //     setState(() {
+                    //       menu = "deposito";
+                    //     });
+                    //   },
+                    // ),
+                    // ListTile(
+                    //   leading: Icon(
+                    //     Icons.transfer_within_a_station_rounded,
+                    //     color: Colors.white,
+                    //   ),
+                    //   title: Text(
+                    //     'Transferencia',
+                    //     style: TextStyle(color: Colors.white),
+                    //   ),
+                    //   onTap: () {
+                    //     setState(() {});
+                    //     menu = "Transferencia";
+                    //   },
+                    // ),
+                    // ListTile(
+                    //   leading: Icon(
+                    //     Icons.trending_up,
+                    //     color: Colors.white,
+                    //   ),
+                    //   title: Text(
+                    //     'Empréstimos',
+                    //     style: TextStyle(color: Colors.white),
+                    //   ),
+                    //   onTap: () {
+                    //     setState(() {});
+                    //     menu = "Empréstimos";
+                    //   },
+                    // ),
+                    // ListTile(
+                    //   leading: Icon(
+                    //     Icons.cancel_schedule_send_sharp,
+                    //     color: Colors.white,
+                    //   ),
+                    //   title: Text(
+                    //     'Cancelar contas e outros',
+                    //     style: TextStyle(color: Colors.white),
+                    //   ),
+                    //   onTap: () {
+                    //     setState(() {});
+                    //     menu = "Cancelar contas e outros";
+                    //   },
+                    // ),
                   ],
                 ),
               ),
