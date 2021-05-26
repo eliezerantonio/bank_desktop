@@ -16,7 +16,7 @@ class EmployeeManager extends ChangeNotifier {
 
 
   Future<ApiResponse<Employee>> login(String email, String password) async {
-    print('email');
+   
      
     try {
       var url = '$BASE_URL/employee/login';
@@ -33,10 +33,12 @@ class EmployeeManager extends ChangeNotifier {
 
       Map mapRensponse = json.decode(response.body);
 
-      print(mapRensponse);
+      
 
       if (response.statusCode == 200) {
         final employeeFrom = Employee.fromJson(mapRensponse);
+
+        print(employeeFrom);
         employeeFrom.save();
         notifyListeners();
         return ApiResponse.ok(employeeFrom);
@@ -54,7 +56,9 @@ class EmployeeManager extends ChangeNotifier {
   }
 
   Future<Employee> getUser() async {
-    String jsonS = await Prefs.getString("employeeFrom.prefs");
+    String jsonS = await Prefs.getString("employee.prefs");
+
+   
 
     if (jsonS.isEmpty) {
       return null;
@@ -63,7 +67,7 @@ class EmployeeManager extends ChangeNotifier {
       Map map = json?.decode(jsonS);
 
       employee = Employee.fromJsonPrefs(map);
-      print(employee);
+     
     }
 
     return employee;

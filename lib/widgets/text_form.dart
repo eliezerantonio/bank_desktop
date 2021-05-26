@@ -10,7 +10,7 @@ class CustomTextField extends StatelessWidget {
   this.validator, this.keyboardType, this.focusNode, this.nextFocus, 
   this.textInputAction, @required this.onSaved}
   );
-
+   
   bool password;
   FormFieldValidator<String> validator;
   TextInputType keyboardType;
@@ -36,7 +36,7 @@ class CustomTextField extends StatelessWidget {
       },
       decoration: InputDecoration(
         border: OutlineInputBorder(
-           borderRadius: BorderRadius.circular(16)
+           borderRadius: BorderRadius.circular(10)
         ),           
       ),
     );
