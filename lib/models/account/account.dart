@@ -6,7 +6,7 @@ class AccountModel {
   int id;
   int clientId;
   String state;
-  double balance;
+  num balance;
 AccountModel();
 
 

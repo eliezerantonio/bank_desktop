@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                         });
                       },
                     ),
-                     ListTile(
+                    ListTile(
                       leading: Icon(
                         Icons.account_balance,
                         color: Colors.white,
@@ -102,8 +102,21 @@ class _HomePageState extends State<HomePage> {
                         });
                       },
                     ),
-                 
-                     
+                    ListTile(
+                      leading: Icon(
+                        Icons.upload_outlined,
+                        color: Colors.white,
+                      ),
+                      title: Text(
+                        'Deposito',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onTap: () {
+                        setState(() {
+                          menu = "Deposito";
+                        });
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -139,19 +152,18 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-    
       if (menu == "Deposito")
-         DepositScreen()
-      else if(menu == "Conta")
-          AccountScreen()
-      else if(menu == "Levantamento")
+        DepositScreen()
+      else if (menu == "Conta")
+        AccountScreen()
+      else if (menu == "Levantamento")
         Container(
           height: 100,
           width: 100,
           color: Colors.green,
         )
-        else 
-         ClientScreen()
+      else
+        ClientScreen()
     ]));
   }
 }

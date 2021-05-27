@@ -10,11 +10,10 @@ import 'package:flutter_desktop/widgets/text_form.dart';
 import 'package:provider/provider.dart';
 
 class DepositScreen extends StatelessWidget {
-
   AccountModel account = AccountModel();
 
   final _formKey = GlobalKey<FormState>();
-
+  String initialValue = "";
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -22,13 +21,35 @@ class DepositScreen extends StatelessWidget {
     _onCriarConta() async {
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
-        int currentAccount = account.id;
-        ApiResponse apiResponse = await context.read<AccountManager>().deposit(
-              currentAccount: currentAccount,
-         );
-         print('$apiResponse');
+        ApiResponse apiResponse = await context
+            .read<AccountManager>()
+            .deposit(account: account.id, balance: account.balance);
+        print('$apiResponse');
         if (apiResponse.ok) {
-          messenger(context, "Deposito realizado com sucesso");
+          showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  title: Column(
+                    children: [
+                      Icon(Icons.upload_outlined,
+                          color: Colors.green, size: 50),
+                      Text("Deposito realizado com sucesso"),
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                      child: Text('Ok'),
+                      onPressed: () {
+                        _formKey.currentState.reset();
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                );
+              });
         } else {
           messenger(context, apiResponse.msg, error: true);
         }
@@ -82,24 +103,11 @@ class DepositScreen extends StatelessWidget {
                           SizedBox(
                             height: 20,
                           ),
-                          Text('ID_Client'),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          CustomTextField(
-                            keyboardType: TextInputType.number,
-                            onSaved: (clientId) =>
-                                account.clientId = int.parse(clientId),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
                           Text('Balance'),
                           SizedBox(
                             height: 20,
                           ),
                           CustomTextField(
-                            keyboardType: TextInputType.number,
                             onSaved: (balance) =>
                                 account.balance = double.parse(balance),
                           ),
@@ -107,17 +115,19 @@ class DepositScreen extends StatelessWidget {
                             height: 15,
                           ),
                           Container(
-                              width: 100,
-                              height: 44,
-                              child: RaisedButton(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  color: Color(PRIMARY_COLOR),
-                                  child: Text(
-                                    'Depositar',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  onPressed: _onCriarConta))
+                            width: 100,
+                            height: 44,
+                            child: RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              color: Color(PRIMARY_COLOR),
+                              child: Text(
+                                'Depositar',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onPressed: _onCriarConta,
+                            ),
+                          )
                         ],
                       ),
                     ),

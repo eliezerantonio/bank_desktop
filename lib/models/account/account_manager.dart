@@ -9,34 +9,25 @@ import 'package:flutter_desktop/models/employee/employee_manager.dart';
 import 'package:http/http.dart' as http;
 
 class AccountManager extends ChangeNotifier {
-
   AccountModel account;
 
-  AccountManager() {
-  }
+  AccountManager() {}
 
   bool _isLoading = false;
-  set loading(bool value){
+  set loading(bool value) {
     _isLoading = value;
     notifyListeners();
   }
-  
-   
-  
-
- 
-
 
   Future<ApiResponse<AccountModel>> store(AccountModel account) async {
     try {
       var url = '$BASE_URL/account/';
 
-      EmployeeManager employee ;
-     
+      EmployeeManager employee;
+
       Map<String, String> headers = {
         "Content-type": "application/json",
-        "x-access-token":"${employee.employee.token}"
-  
+        "x-access-token": "${employee.employee.token}"
       };
 
       Map params = {
@@ -45,9 +36,9 @@ class AccountManager extends ChangeNotifier {
       };
 
       String credencials = json.encode(params);
-      
+
       var response = await http.post(url, body: credencials, headers: headers);
- print(response.body);
+      print(response.body);
       Map mapRensponse = json.decode(response.body);
 
       if (response.statusCode == 200) {
@@ -65,34 +56,26 @@ class AccountManager extends ChangeNotifier {
       // notifyListeners();
       return ApiResponse.error("Impossivel fazer login");
     }
-  } 
-  
+  }
 
-  Future<ApiResponse<AccountModel>> deposit ({
-
-    @required int currentAccount
-
-   }) async {
-      try {
-      
-       EmployeeManager employee ;
-         loading = true;
-      var url = '$BASE_URL/account/deposit/$currentAccount';
+  Future<ApiResponse<AccountModel>> deposit(
+      {@required int account, double balance}) async {
+    try {
+      loading = true;
+      var url = '$BASE_URL/account/deposit/$account';
       Map<String, String> headers = {
         "Content-type": "application/json",
-        "x-access-token": "${employee.employee.token}"
       };
 
       Map params = {
-        'id': account.id,
-        'clientId': account.clientId,
-        'balance': account.balance,
+     
+        'balance': balance,
       };
 
       String credencials = json.encode(params);
-      
+
       var response = await http.patch(url, body: credencials, headers: headers);
-       print(response.body);
+ 
       Map mapRensponse = json.decode(response.body);
 
       if (response.statusCode == 200) {
@@ -101,7 +84,7 @@ class AccountManager extends ChangeNotifier {
         return ApiResponse.ok(account);
       }
 
-     loading = false;
+      loading = false;
 
       return ApiResponse.error(mapRensponse["message"]);
     } catch (e) {
@@ -111,9 +94,5 @@ class AccountManager extends ChangeNotifier {
       // notifyListeners();
       return ApiResponse.error("$e");
     }
-  } 
-
-
-
-
+  }
 }
