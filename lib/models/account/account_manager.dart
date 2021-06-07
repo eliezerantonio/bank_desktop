@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 class AccountManager extends ChangeNotifier {
   AccountModel account;
 
+  EmployeeManager employee = EmployeeManager();
   AccountManager() {}
 
   bool _isLoading = false;
@@ -23,8 +24,7 @@ class AccountManager extends ChangeNotifier {
     try {
       var url = '$BASE_URL/account/';
 
-      EmployeeManager employee;
-
+      employee.getUser();
       Map<String, String> headers = {
         "Content-type": "application/json",
         "x-access-token": "${employee.employee.token}"
@@ -68,14 +68,13 @@ class AccountManager extends ChangeNotifier {
       };
 
       Map params = {
-     
         'balance': balance,
       };
 
       String credencials = json.encode(params);
 
       var response = await http.patch(url, body: credencials, headers: headers);
- 
+
       Map mapRensponse = json.decode(response.body);
 
       if (response.statusCode == 200) {

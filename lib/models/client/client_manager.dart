@@ -12,16 +12,15 @@ class ClientManager extends ChangeNotifier {
 
   ClientModel client;
 
-    EmployeeManager employee =  EmployeeManager();
-    
+  EmployeeManager employee = EmployeeManager();
+
   Future<ApiResponse<ClientModel>> store(ClientModel client) async {
     try {
       var url = '$BASE_URL/client/';
-     
+         employee.getUser();
       Map<String, String> headers = {
         "Content-type": "application/json",
-        "x-access-token":"${employee.employee.token}"
-  
+        "x-access-token": "${employee.employee.token}"
       };
 
       Map params = {
@@ -31,13 +30,13 @@ class ClientManager extends ChangeNotifier {
         'phone': client.phone,
         'genre': client.genre,
         'bi': client.bi,
-        'birthDate':"1997-10-26"
+        'birthDate': "1997-10-26"
       };
 
       String credencials = json.encode(params);
-      
+
       var response = await http.post(url, body: credencials, headers: headers);
- print(response.body);
+      print(response.body);
       Map mapRensponse = json.decode(response.body);
 
       if (response.statusCode == 200) {
