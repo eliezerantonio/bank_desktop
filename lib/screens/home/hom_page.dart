@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_desktop/helpers/client/client_screen.dart';
 import 'package:flutter_desktop/helpers/consts.dart';
 
 import 'package:flutter_desktop/models/employee/employee.dart';
-import 'package:flutter_desktop/screens/client/client_screen.dart';
+
 import 'package:flutter_desktop/screens/conta/account_screen.dart';
 import 'package:flutter_desktop/screens/deposit/deposit_screen.dart';
 import 'package:flutter_desktop/screens/login_screen.dart';
